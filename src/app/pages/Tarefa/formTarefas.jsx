@@ -1,16 +1,16 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   createTarefa,
   getContatosList,
   getTarefaDetail,
   updateTarefa,
-} from "../../../service/crud";
+} from '../../../service/crud';
 import { tarefaValidator } from '../../../validators/tarefaValidator';
-import { Button, Container, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Button, Container, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 
 export const FormTarefas = () => {
   const { id } = useParams();
@@ -35,13 +35,13 @@ export const FormTarefas = () => {
     }
   }, [id, tarefa, setValue]);
 
-  // const getContatos = async () => {
-  //   await getContatosList().then((result) => setContato(result));
-  // };
+  const getContatos = async () => {
+    await getContatosList().then((result) => setContato(result));
+  };
 
-  // useEffect(() => {
-  //   getContatos();
-  // }, []);
+  useEffect(() => {
+    getContatos();
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -53,7 +53,7 @@ export const FormTarefas = () => {
 
   const salvar = (data) => {
     const values = { ...data };
-    values.ativo = values.ativo === "true" ? true : false;
+    values.ativo = values.ativo === 'true' ? true : false;
 
     if (id) {
       updateTarefa(id, values);
@@ -61,7 +61,7 @@ export const FormTarefas = () => {
       createTarefa(values);
     }
 
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -69,7 +69,7 @@ export const FormTarefas = () => {
       <div className="margin-top"></div>
       <Container>
         <h1>
-          {id ? "Editar" : "Nova"} Tarefa{id ? `: ${tarefa.titulo}` : ""}
+          {id ? 'Editar' : 'Nova'} Tarefa{id ? `: ${tarefa.titulo}` : ''}
         </h1>
         <div>
           <Form>
@@ -78,24 +78,32 @@ export const FormTarefas = () => {
               <Form.Control
                 type="text"
                 isInvalid={errors.titulo}
-                {...register("titulo", tarefaValidator.titulo)}
+                {...register('titulo', tarefaValidator.titulo)}
                 placeholder="Titulo"
               />
-              {errors.titulo && <span className='text-danger small'>{errors.titulo.message}</span>}
+              {errors.titulo && (
+                <span className="text-danger small">
+                  {errors.titulo.message}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="md-3 my-4" controlId="titulo">
               <label> Descrição: </label>
               <Form.Control
                 type="text"
                 isInvalid={errors.descricao}
-                {...register("descricao", tarefaValidator.descricao)}
+                {...register('descricao', tarefaValidator.descricao)}
                 placeholder="Descrição"
-                />
-                {errors.descricao && <span className='text-danger small'>{errors.descricao.message}</span>}
+              />
+              {errors.descricao && (
+                <span className="text-danger small">
+                  {errors.descricao.message}
+                </span>
+              )}
             </Form.Group>
             <Form.Group className="md-3 my-4" controlId="titulo">
               <label> Ativo: </label>
-              <Form.Select {...register("ativo")}>
+              <Form.Select {...register('ativo')}>
                 <option>Selecione</option>
                 <option value={true}>Ativo</option>
                 <option value={false}>Inativo</option>
@@ -103,7 +111,7 @@ export const FormTarefas = () => {
             </Form.Group>
             <Form.Group className="md-3" controlId="titulo">
               <label> Contato: </label>
-              <Form.Select {...register("contato")}>
+              <Form.Select {...register('contato')}>
                 <option>Selecione</option>
                 {contatos.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -114,7 +122,7 @@ export const FormTarefas = () => {
             </Form.Group>
 
             <Button
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
               className="btn btn-danger my-4 mx-5"
             >
               Cancelar
