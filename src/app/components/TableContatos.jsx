@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
-import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
-import { deleteContato, getContatosList } from "../../service/crud";
-import { useEffect } from "react";
-
+import React, { useState } from 'react';
+import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
+import { RiDeleteBin6Fill, RiPencilFill } from 'react-icons/ri';
+import { deleteContato, getContatosList } from '../../service/crud';
+import { useEffect } from 'react';
 
 export const TableContatos = () => {
   const [contatos, setContato] = useState([]);
-//   console.log(contatos);
- 
+  //   console.log(contatos);
+
   const renderAll = async () => {
     await getContatosList().then((result) => setContato(result));
-  }
+  };
 
   const remove = async (data) => {
-    if (window.confirm(`Tem certeza que deseja apagar o contato: "${data.nome}" ?`)) {
+    if (
+      window.confirm(
+        `Tem certeza que deseja apagar o contato: "${data.nome}" ?`
+      )
+    ) {
       try {
         await deleteContato(data.id);
         renderAll();
-      } 
-      catch(e) {
+      } catch (e) {
         console.log(e);
       }
     }
-  }
+  };
 
   useEffect(() => {
     renderAll();
@@ -50,9 +52,11 @@ export const TableContatos = () => {
               <td>
                 <Link to={`/atualizar-contato/${item.id}`}>
                   <RiPencilFill className="text-dark" />
-                </Link>
-                {" "}
-                <RiDeleteBin6Fill className="text-dark" onClick={() => remove(item)} />
+                </Link>{' '}
+                <RiDeleteBin6Fill
+                  className="text-dark"
+                  onClick={() => remove(item)}
+                />
               </td>
             </tr>
           ))}
