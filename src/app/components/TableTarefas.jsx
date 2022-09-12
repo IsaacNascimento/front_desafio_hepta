@@ -37,7 +37,7 @@ export const TableComponent = () => {
   const getContatoName = (id) => {
     for (let i = 0; i < contato.length; i++) {
       const contatoObj = contato[i];
-      console.log(contatoObj);
+      // console.log(contatoObj);
       if (contatoObj?.id == id) {
         return <span>{contatoObj?.nome}</span>;
       } else {
