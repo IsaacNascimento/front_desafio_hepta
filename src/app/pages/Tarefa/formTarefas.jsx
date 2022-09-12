@@ -35,13 +35,13 @@ export const FormTarefas = () => {
     }
   }, [id, tarefa, setValue]);
 
-  const getContatos = async () => {
-    await getContatosList().then((result) => setContato(result));
-  };
+  // const getContatos = async () => {
+  //   await getContatosList().then((result) => setContato(result));
+  // };
 
-  useEffect(() => {
-    getContatos();
-  }, []);
+  // useEffect(() => {
+  //   getContatos();
+  // }, []);
 
   useEffect(() => {
     if (id) {
