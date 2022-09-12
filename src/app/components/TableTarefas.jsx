@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
-import { RiDeleteBin6Fill, RiPencilFill } from 'react-icons/ri';
+import React, { useState } from "react";
+import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
+import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
 import {
   deleteTarefa,
-  // getContatosList,
+  getContatosList,
   getTarefasList,
-} from '../../service/crud';
-import { useEffect } from 'react';
+} from "../../service/crud";
+import { useEffect } from "react";
 
 export const TableComponent = () => {
   const [tarefas, setTarefas] = useState([]);
   // console.log(tarefas);
-  // const [contato, setContato] = useState([]);
+  const [contato, setContato] = useState([]);
+  // console.log(contato);
 
   const renderAll = async () => {
     await getTarefasList().then((response) => setTarefas(response));
@@ -33,17 +34,29 @@ export const TableComponent = () => {
     }
   };
 
+  const getContatoName = (id) => {
+    for (let i = 0; i < contato.length; i++) {
+      const contatoObj = contato[i];
+      console.log(contatoObj);
+      if (contatoObj?.id == id) {
+        return <span>{contatoObj?.nome}</span>;
+      } else {
+        return <span>Sem contato</span>;
+      }
+    }
+  };
+
   useEffect(() => {
     renderAll();
   }, []);
 
-  // const getContatos = async () => {
-  //   await getContatosList().then((result) => setContato(result));
-  // };
+  const getContatos = async () => {
+    await getContatosList().then((result) => setContato(result));
+  };
 
-  // useEffect(() => {
-  //   getContatos();
-  // });
+  useEffect(() => {
+    getContatos();
+  }, []);
 
   return (
     <div>
@@ -62,7 +75,7 @@ export const TableComponent = () => {
           {tarefas.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
-              <td>{item.contato ? item.contato : 'Sem contato'}</td>
+              <td>{getContatoName(item.contato)}</td>
               <td>{item.titulo}</td>
               <td>{item.descricao}</td>
               <td>
@@ -75,7 +88,7 @@ export const TableComponent = () => {
               <td>
                 <Link to={`/atualizar-tarefa/${item.id}`}>
                   <RiPencilFill className="text-dark" />
-                </Link>{' '}
+                </Link>{" "}
                 <RiDeleteBin6Fill
                   className="text-dark"
                   onClick={() => remove(item)}
