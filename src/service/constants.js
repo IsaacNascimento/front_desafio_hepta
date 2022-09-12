@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = 'http://127.0.0.1:8000';
+const API = 'https://back-desafio-hepta.herokuapp.com';
 export const ApiTarefas = axios.create({  
     baseURL: API,
 })
